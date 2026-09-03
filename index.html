@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jitsi Talk</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">К содержимому</a>
+<header id="appbar" hidden>
+  <div class="brand" role="heading" aria-level="1">Jitsi Talk <span id="roomname"></span></div>
+  <div id="statusline" class="statusline">0</div>
+  <div id="toolbar" role="toolbar" aria-label="Управление звонком"></div>
+</header>
+<main id="main">
+  <section id="landing">
+    <h1>Jitsi Talk</h1>
+    <p>Доступный джитси для семьи и друзей. Выбери комнату, введи имя — обёртка звуком и голосом сообщает, кто вошёл, кто вышел и что пишут в чат.</p>
+    <form id="join-form" class="join">
+      <div class="field">
+        <label for="room">Комната</label>
+        <select id="room">
+          <option value="family">/family — русская семья</option>
+          <option value="tr">/tr — папа и Турция</option>
+          <option value="deniz" selected>/deniz — друзья и всё</option>
+          <option value="__custom">Своя…</option>
+        </select>
+        <input type="text" id="room-custom" hidden placeholder="имя комнаты">
+      </div>
+      <div class="field">
+        <label for="name">Твоё имя</label>
+        <input type="text" id="name" placeholder="Например, Дениз" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="langsel">Язык озвучки</label>
+        <select id="langsel">
+          <option value="ru">Русский</option>
+          <option value="en">English</option>
+          <option value="tr">Türkçe</option>
+        </select>
+      </div>
+      <button type="submit">Войти</button>
+    </form>
+    <p class="hint">Можно открыть напрямую: <code>talk.denizsincar.ru/family?name=Имя</code> или <code>?name=...&amp;lang=tr</code></p>
+  </section>
+  <div id="conference" hidden>
+    <div id="container"></div>
+    <div id="live" class="visually-hidden" aria-live="polite"></div>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
