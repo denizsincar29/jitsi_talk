@@ -153,11 +153,15 @@
       const mk = (key, cmd, danger, kbd) => {
         const b = document.createElement('button');
         b.dataset.cmd = cmd;
+        if (kbd) b.dataset.key = kbd; // hotkey letter, used to rebuild the accessible name
         if (danger) b.className = 'danger';
         const span = document.createElement('span');
         span.className = 'lbl'; span.textContent = t(key);
         b.appendChild(span);
-        if (kbd) { const k = document.createElement('kbd'); k.textContent = kbd; b.appendChild(k); }
+        // Accessible name spells the label and the hotkey separately ("Камера (V)"),
+        // so screen readers never glue a stray Latin letter onto the word.
+        b.setAttribute('aria-label', t(key) + (kbd ? ' (' + kbd + ')' : ''));
+        if (kbd) { const k = document.createElement('kbd'); k.textContent = kbd; k.setAttribute('aria-hidden', 'true'); b.appendChild(k); }
         b.setAttribute('aria-pressed', 'false');
         bar.appendChild(b);
         return b;
@@ -298,7 +302,10 @@
             const st = stateBtns[cmd];
             st.set(!st.get());
             btn.setAttribute('aria-pressed', String(st.get()));
-            btn.querySelector('.lbl').textContent = t(labelKeys[cmd][st.get() ? 0 : 1]);
+            const lk = labelKeys[cmd][st.get() ? 0 : 1];
+            btn.querySelector('.lbl').textContent = t(lk);
+            const key = btn.dataset.key || '';
+            btn.setAttribute('aria-label', t(lk) + (key ? ' (' + key + ')' : ''));
           } else if (cmds[cmd]) {
             cmds[cmd]();
           }
